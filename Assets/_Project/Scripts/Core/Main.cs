@@ -23,10 +23,6 @@ namespace Core
         [SerializeField] private UnityEvent _onGamePause = new UnityEvent();
         [SerializeField] private UnityEvent _onGameResume = new UnityEvent();
 
-        [Header("References")]
-        [SerializeField] private Camera _mainCamera;
-        [SerializeField] private AudioListener _audioListener;
-
         // Cached references
         private Transform _cachedTransform;
 
@@ -52,10 +48,6 @@ namespace Core
 
             // Cache references
             _cachedTransform = transform;
-            if (_mainCamera == null)
-                _mainCamera = Camera.main;
-            if (_audioListener == null)
-                _audioListener = GetComponentInChildren<AudioListener>();
 
             // Ensure this object persists across scenes if needed
             DontDestroyOnLoad(gameObject);
@@ -161,6 +153,12 @@ namespace Core
             _previousState = _currentState;
             _currentState = newState;
             ApplyState(newState);
+
+            // Sync with GameStateManager if available
+            if (G.HasGameState() && G.GameState.CurrentState != newState)
+            {
+                G.GameState.SetState(newState);
+            }
         }
 
         private void ApplyState(GameState state)
@@ -170,17 +168,11 @@ namespace Core
             {
                 case GameState.Intro:
                     Time.timeScale = 1f;
-                    Cursor.lockState = CursorLockMode.None;
-                    Cursor.visible = true;
                     break;
                 case GameState.Playing:
                     Time.timeScale = 1f;
-                    Cursor.lockState = CursorLockMode.Locked;
-                    Cursor.visible = false;
                     break;
                 case GameState.Paused:
-                    Cursor.lockState = CursorLockMode.None;
-                    Cursor.visible = true;
                     break;
             }
         }

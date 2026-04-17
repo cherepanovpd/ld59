@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
+using Core;
 
 namespace Common.Runtime.Components
 {
     public class ScreenShake : MonoBehaviour
     {
-        public float screenShakeSetting = 8f; 
+        public float screenShakeSetting = 8f;
 
         private float shakeAmount;
         private float originalShakeAmount;

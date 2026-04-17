@@ -23,6 +23,7 @@ namespace InputSystem
         // Cached action map
         private InputActionMap _uiMap;
         private InputAction _pauseAction;
+        private InputAction _clickAction;
 
         // Event
         public event Action OnPausePressed;
@@ -59,12 +60,19 @@ namespace InputSystem
             }
 
             // Cache pause action
-            _pauseAction = _uiMap.FindAction("Pause");
+            _pauseAction = _uiMap.FindAction("Cancel");
             if (_pauseAction == null)
             {
                 Debug.LogWarning("[InputManager] Pause action not found.", this);
                 enabled = false;
                 return;
+            }
+
+            // Cache click action (optional)
+            _clickAction = _uiMap.FindAction("Click");
+            if (_clickAction == null)
+            {
+                Debug.LogWarning("[InputManager] Click action not found. Skip functionality may be limited.", this);
             }
 
             // Make this object persistent across scenes
@@ -109,6 +117,9 @@ namespace InputSystem
 
         /// <summary> Check if the pause button was pressed this frame. </summary>
         public bool WasPausePressed() => _pauseAction?.WasPressedThisFrame() ?? false;
+
+        /// <summary> Check if the click button (left mouse or touch) was pressed this frame. </summary>
+        public bool WasClickPressed() => _clickAction?.WasPressedThisFrame() ?? false;
 
         #endregion
 
