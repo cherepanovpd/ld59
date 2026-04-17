@@ -1,0 +1,12 @@
+---
+name: unity-project-structure
+description: Guidelines for file placement, folder organization, and namespace conventions.
+---
+
+Unity Project Organization and Folder Structure:
+- ALL custom C# scripts MUST be placed inside the `Assets/_Project/Scripts/` directory. Do not place scripts in the root `Assets/` or `Assets/Scripts/` folders.
+- Organize files by Feature/Domain inside this root directory (e.g., `Assets/_Project/Scripts/Player/`, `Assets/_Project/Scripts/UI/`).
+- Core and shared systems (like the `G` static class or `Main`) should be placed in a core folder, e.g., `Assets/_Project/Scripts/Core/`.
+- Editor-specific scripts MUST go into an `Editor` folder (e.g., `Assets/_Project/Scripts/Editor/` or `Assets/_Project/Scripts/Inventory/Editor/`).
+- Namespaces MUST match the folder structure relative to the scripts root. For example, a script in `Assets/_Project/Scripts/Player/` should use `namespace Project.Player` or `Project.Scripts.Player`.
+- When suggesting a new script, ALWAYS explicitly state the target file path at the top of the code block (e.g., `// Path: Assets/_Project/Scripts/UI/MainMenu.cs`).

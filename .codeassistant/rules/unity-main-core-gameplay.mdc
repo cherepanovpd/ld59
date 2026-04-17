@@ -1,0 +1,10 @@
+---
+name: unity-main-core-gameplay
+description: Defines the central controller for the game's core loop.
+---
+
+Architecture: The 'Main' Core Gameplay Class:
+- The game relies on a single central orchestration class named `Main`.
+- `Main` is responsible for controlling the core gameplay loop, managing game states, and orchestrating other systems during gameplay.
+- `Main` must register itself into the global references class as `G.Main`.
+- While `Main` acts as the central orchestrator, still attempt to delegate specific sub-tasks (like updating the HUD or playing sounds) to the respective systems via `G` rather than writing all low-level logic directly inside `Main`.

@@ -1,0 +1,10 @@
+---
+name: unity-inspector-and-editor
+description: Rules for variable serialization, component dependencies, and Editor UI.
+---
+
+Unity Inspector and Serialization Rules:
+- NEVER use `public` fields just to expose them in the Inspector. Always use `[SerializeField] private Type _fieldName;`.
+- Organize the Inspector using attributes like `[Header("...")], [Tooltip("...")], and [Space]`.
+- Always add `[RequireComponent(typeof(ComponentName))]` if the script relies on `GetComponent<ComponentName>()` internally.
+- Any code related solely to the Unity Editor must be wrapped in `#if UNITY_EDITOR ... #endif` or placed in an `Editor` folder to prevent build errors.

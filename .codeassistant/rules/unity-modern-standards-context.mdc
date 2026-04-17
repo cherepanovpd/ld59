@@ -1,0 +1,11 @@
+---
+name: unity-modern-standards-context
+description: Default assumptions about the project's tech stack.
+---
+
+Project Context and Tech Stack Preferences:
+- Input: Assume the use of the "New Input System" (`UnityEngine.InputSystem`), NOT the legacy `Input.GetAxis`.
+- Graphics/Rendering: Assume Universal Render Pipeline (URP).
+- UI Framework: Assume standard uGUI (Canvas-based). 
+- UI Architecture: Separate view logic from business logic (prefer MVP or MVVM patterns).
+- Async: Assume the `UniTask` package is installed and preferred.

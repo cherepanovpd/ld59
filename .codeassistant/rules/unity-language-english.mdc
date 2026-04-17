@@ -1,0 +1,9 @@
+---
+name: unity-language-english
+description: Enforces the primary language for all player-facing text and localization keys.
+---
+
+Language and Text Generation:
+- The game is developed EXCLUSIVELY in English.
+- ALL text, strings, and dialogue shown to the player must be generated in English.
+- When generating the CSV table for Unity Localization (as per previous rules), the primary language column must be English.

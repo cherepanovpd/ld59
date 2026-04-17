@@ -1,0 +1,11 @@
+---
+name: unity-no-execution-environment
+description: CRITICAL constraint preventing the AI from attempting to run, test, or compile Unity code.
+---
+
+Execution and Testing Constraints (CRITICAL):
+- DO NOT attempt to run, compile, debug, or execute C# code using your internal code interpreters, terminals, or Python environments.
+- You do NOT have access to the Unity Editor runtime or the `UnityEngine` DLLs. Any attempt to compile Unity code on your end will fail.
+- Your job is strictly to perform static code generation and analysis. Rely on your internal knowledge of C# and the Unity API to ensure syntax correctness.
+- Just write the code and provide it to me. I will compile, debug, and test it inside the actual Unity Editor.
+- Do not write automated tests (e.g., NUnit, PlayMode, EditMode tests) unless I explicitly ask for them.

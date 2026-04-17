@@ -1,0 +1,21 @@
+---
+name: unity-global-service-locator
+description: Enforces the use of a static class 'G' instead of traditional Dependency Injection.
+---
+
+Architecture: The 'G' Static Class (Service Locator):
+- DO NOT use standard
+ Dependency Injection frameworks (like VContainer or Zenject).
+- We use a single `public static class G` to store global references to frequently used systems.
+- Self-Registration Pattern: Objects must register themselves into `G` during their `Awake()` method (e.g., `G.Audio = this;`) and unregister in `OnDestroy()` if necessary.
+- ONLY the following core systems can be stored in `G`:
+  - Audio System
+  - Camera Management
+  - Core Gameplay (`Main`)
+  - Save System
+  - UI / HUD / Tooltips
+  - Map System
+  - Utility Components
+  - Game Balance / Configs
+  - Scene Management
+- Never put local, minor, or temporary objects (like specific enemies or bullets) into `G`.

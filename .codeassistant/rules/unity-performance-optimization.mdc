@@ -1,0 +1,11 @@
+---
+name: unity-performance-optimization
+description: CRITICAL performance rules, memory management, and execution loop guidelines.
+---
+
+CRITICAL Performance and Optimization Rules:
+- ZERO ALLOCATIONS in execution loops (`Update`, `FixedUpdate`, `LateUpdate`). 
+- Do not instantiate new objects (`new`), avoid string concatenation, avoid closures, and completely avoid LINQ in loops to prevent Garbage Collection (GC) spikes.
+- Cache references. Never use `GetComponent`, `Camera.main`, or `GameObject.Find` inside `Update`. Call them in `Awake` or `Start` and cache the result.
+- Use `CompareTag("Tag")` instead of `gameObject.tag == "Tag"`.
+- Asynchronous operations: Prefer `async/await` (assume `UniTask` library is used) over standard Unity `Coroutine` to avoid garbage allocation. If coroutines must be used, cache `new WaitForSeconds()` instances.

@@ -1,0 +1,12 @@
+---
+name: unity-architecture-csharp
+description: Defines architectural rules, SOLID principles, and data management in Unity.
+---
+
+Architecture and C# Best Practices for Unity:
+- Strictly follow SOLID principles.
+- Avoid "God Objects". Keep classes small, focused, and ideally under 300-400 lines.
+- Use Namespaces that match the folder structure of the project.
+- Decouple data from logic. Aggressively use `ScriptableObject` for configs, game designs, stats, and inventories instead of storing them inside `MonoBehaviour`.
+- Avoid tight coupling. Use C# Events (`Action`, `Func`) and Interfaces for communication between scripts.
+- NEVER use the Singleton pattern as a default solution. Prefer Dependency Injection (e.g., VContainer, Zenject) or a Service Locator pattern.
