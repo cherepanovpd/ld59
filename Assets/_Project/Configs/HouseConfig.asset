@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71340ac2a2360e547a74bb6e69bc8b15, type: 3}
+  m_Name: HouseConfig
+  m_EditorClassIdentifier: Assembly-CSharp::Project.HouseGenerator.Config.HouseConfig
+  _baseSaturation: 15
+  _baseValue: 100
+  _roofColorPairs:
+  - _lightColor: {r: 0.08627451, g: 0.627451, b: 0.52156866, a: 1}
+    _darkColor: {r: 0.058823533, g: 0.43529415, b: 0.36078432, a: 1}
+  - _lightColor: {r: 0.9333334, g: 0.6, b: 0.06666667, a: 1}
+    _darkColor: {r: 0.83921576, g: 0.5372549, b: 0.0627451, a: 1}
+  - _lightColor: {r: 0.57254905, g: 0.63529414, b: 0.6392157, a: 1}
+    _darkColor: {r: 0.43921572, g: 0.4784314, b: 0.48235297, a: 1}
+  - _lightColor: {r: 0.20392159, g: 0.59607846, b: 0.8588236, a: 1}
+    _darkColor: {r: 0.15686275, g: 0.45098042, b: 0.6509804, a: 1}
+  - _lightColor: {r: 0.627451, g: 0.2509804, b: 0, a: 1}
+    _darkColor: {r: 0.43137258, g: 0.17254902, b: 0, a: 1}
+  - _lightColor: {r: 0.90196085, g: 0.4901961, b: 0.13333334, a: 1}
+    _darkColor: {r: 0.79215693, g: 0.43529415, b: 0.11764707, a: 1}
+  - _lightColor: {r: 0.9058824, g: 0.29803923, b: 0.23529413, a: 1}
+    _darkColor: {r: 0.75294125, g: 0.22352943, b: 0.16862746, a: 1}
+  _houseElementPrefabs:
+  - {fileID: 8153110730846294915, guid: cfee755d49a90f54986b5bfcd6606532, type: 3}
+  - {fileID: 4001852246049932579, guid: f2541264480182147a7a358e0474a582, type: 3}
+  - {fileID: 1856609231579378979, guid: dfbc8a73a55e8b84db5ede0aed2c6ec3, type: 3}
+  - {fileID: 2850816029477567194, guid: c3bacaa146a1891419dc949be893858c, type: 3}
+  - {fileID: 4463254235355906846, guid: 9fae43d769c4a4344b3d0b00b1fbf16e, type: 3}
+  - {fileID: 4055952076393391304, guid: 5d2a70c692d91494abee8d65c59051e9, type: 3}
+  - {fileID: 7134940765553341987, guid: 1c5f3c88276c5db4e8b1d58e06ba4845, type: 3}
+  - {fileID: 1856609231579378979, guid: d1905f0e15292374591cd2dcf07bcfaa, type: 3}
+  - {fileID: 2850816029477567194, guid: 594cb069d474b434db955200628fa8a9, type: 3}
+  - {fileID: 4463254235355906846, guid: 89c6621ce433f7940b135b089ba1140f, type: 3}
+  - {fileID: 4055952076393391304, guid: 971de101b573fda4e8bbfe230d426da9, type: 3}

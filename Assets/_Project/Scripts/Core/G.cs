@@ -7,6 +7,7 @@ using InputSystem;
 
 using Project.Audio;
 using Project.Core;
+using Project.HouseGenerator.Config;
 using Project.Utilities;
 using Project.UI.Intro;
 
@@ -32,6 +33,7 @@ namespace Core
         public static InputManager Input { get; set; }
         public static SaveSystem Save { get; set; }
         public static GameConfig Config { get; set; }
+        public static HouseConfig HouseConfig { get; set; }
         public static GameStateManager GameState { get; set; }
         public static ObjectPool Pool { get; set; }
         public static EventSystem Events { get; set; }
@@ -46,6 +48,7 @@ namespace Core
         public static bool HasInput() => Input != null;
         public static bool HasSave() => Save != null;
         public static bool HasConfig() => Config != null;
+        public static bool HasHouseConfig() => HouseConfig != null;
         public static bool HasGameState() => GameState != null;
         public static bool HasPool() => Pool != null;
         public static bool HasEvents() => Events != null;
@@ -73,6 +76,7 @@ namespace Core
             Input = null;
             Save = null;
             Config = null;
+            HouseConfig = null;
             GameState = null;
             Pool = null;
             Events = null;
