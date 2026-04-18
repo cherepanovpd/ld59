@@ -32,9 +32,9 @@ namespace Project.Audio
     {
         [Header("Audio Mixer")]
         [SerializeField] private AudioMixer _audioMixer;
-        [SerializeField] private string _masterVolumeParam = "MasterVolume";
-        [SerializeField] private string _musicVolumeParam = "MusicVolume";
-        [SerializeField] private string _sfxVolumeParam = "SFXVolume";
+        [SerializeField] private AudioMixerGroup _masterGroup;
+        [SerializeField] private AudioMixerGroup _musicGroup;
+        [SerializeField] private AudioMixerGroup _sfxGroup;
 
         [Header("Music Clips")]
         [SerializeField] private List<AudioClipSet> _musicSets = new List<AudioClipSet>();
@@ -230,8 +230,8 @@ namespace Project.Audio
         public void SetMasterVolume(float volume)
         {
             _masterVolume = Mathf.Clamp01(volume);
-            ApplyMixerVolume(_masterVolumeParam, _masterVolume);
-            PlayerPrefs.SetFloat("MasterVolume", _masterVolume);
+            ApplyMixerVolume(_masterGroup, _masterVolume);
+            PlayerPrefs.SetFloat(_masterGroup.name, _masterVolume);
             PlayerPrefs.Save();
         }
 
@@ -241,8 +241,8 @@ namespace Project.Audio
         public void SetMusicVolume(float volume)
         {
             _musicVolume = Mathf.Clamp01(volume);
-            ApplyMixerVolume(_musicVolumeParam, _musicVolume);
-            PlayerPrefs.SetFloat("MusicVolume", _musicVolume);
+            ApplyMixerVolume(_musicGroup, _musicVolume);
+            PlayerPrefs.SetFloat(_musicGroup.name, _musicVolume);
             PlayerPrefs.Save();
         }
 
@@ -252,8 +252,8 @@ namespace Project.Audio
         public void SetSFXVolume(float volume)
         {
             _sfxVolume = Mathf.Clamp01(volume);
-            ApplyMixerVolume(_sfxVolumeParam, _sfxVolume);
-            PlayerPrefs.SetFloat("SFXVolume", _sfxVolume);
+            ApplyMixerVolume(_sfxGroup, _sfxVolume);
+            PlayerPrefs.SetFloat(_sfxGroup.name, _sfxVolume);
             PlayerPrefs.Save();
         }
 
@@ -359,6 +359,7 @@ namespace Project.Audio
                 return;
 
             source.clip = clip;
+            source.outputAudioMixerGroup = _sfxGroup;
             source.volume = volume;
             source.pitch = pitch;
             source.loop = false;
@@ -372,6 +373,7 @@ namespace Project.Audio
             GameObject musicGo = new GameObject("MusicSource");
             musicGo.transform.SetParent(_cachedTransform);
             _musicSource = musicGo.AddComponent<AudioSource>();
+            _musicSource.outputAudioMixerGroup = _musicGroup;
             _musicSource.loop = true;
             _musicSource.playOnAwake = false;
             _musicSource.volume = _musicVolume;
@@ -379,6 +381,7 @@ namespace Project.Audio
             GameObject secondaryGo = new GameObject("SecondaryMusicSource");
             secondaryGo.transform.SetParent(_cachedTransform);
             _secondaryMusicSource = secondaryGo.AddComponent<AudioSource>();
+            _secondaryMusicSource.outputAudioMixerGroup = _musicGroup;
             _secondaryMusicSource.loop = true;
             _secondaryMusicSource.playOnAwake = false;
             _secondaryMusicSource.volume = 0f;
@@ -390,19 +393,19 @@ namespace Project.Audio
             _musicVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);
             _sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 1f);
 
-            ApplyMixerVolume(_masterVolumeParam, _masterVolume);
-            ApplyMixerVolume(_musicVolumeParam, _musicVolume);
-            ApplyMixerVolume(_sfxVolumeParam, _sfxVolume);
+            ApplyMixerVolume(_masterGroup, _masterVolume);
+            ApplyMixerVolume(_musicGroup, _musicVolume);
+            ApplyMixerVolume(_sfxGroup, _sfxVolume);
         }
 
-        private void ApplyMixerVolume(string param, float volume)
+        private void ApplyMixerVolume(AudioMixerGroup group, float volume)
         {
             if (_audioMixer == null)
                 return;
 
             // Convert linear 0-1 to dB (mixer uses logarithmic scale)
             float dB = volume > 0.0001f ? 20f * Mathf.Log10(volume) : -80f;
-            _audioMixer.SetFloat(param, dB);
+            _audioMixer.SetFloat(group.name, dB);
         }
 
         private void StartCrossFade(AudioClip newClip)

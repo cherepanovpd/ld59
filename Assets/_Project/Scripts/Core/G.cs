@@ -7,6 +7,8 @@ using InputSystem;
 
 using Project.Audio;
 using Project.Core;
+using Project.DayNight;
+using Project.DayNight.Config;
 using Project.HouseGenerator.Config;
 using Project.Utilities;
 using Project.UI.Intro;
@@ -39,9 +41,15 @@ namespace Core
         public static EventSystem Events { get; set; }
         public static IntroSystem Intro { get; set; }
         public static CameraManager Camera { get; set; }
+        public static DayNightVolumeController DayNight { get; set; }
+        public static DayNightSystem DayNightSystem { get; set; }
+        public static DayNightConfig DayNightConfig { get; set; }
 
         // Null-check helpers
         public static bool HasAudio() => Audio != null;
+        public static bool HasDayNight() => DayNight != null;
+        public static bool HasDayNightSystem() => DayNightSystem != null;
+        public static bool HasDayNightConfig() => DayNightConfig != null;
         public static bool HasIntro() => Intro != null;
         public static bool HasMain() => Main != null;
         public static bool HasUI() => UI != null;
@@ -82,6 +90,9 @@ namespace Core
             Events = null;
             Intro = null;
             Camera = null;
+            DayNight = null;
+            DayNightSystem = null;
+            DayNightConfig = null;
         }
     }
 }
