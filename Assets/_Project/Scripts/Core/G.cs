@@ -25,6 +25,7 @@ using Common.Runtime.Components;
 
 using Project.Currency;
 using Project.Human;
+using Project.UI.SignalButton;
 
 namespace Core
 {
@@ -68,6 +69,9 @@ namespace Core
         public static CurrencyCounter Currency { get; set; }
         public static BillInteractionSystem BillInteraction { get; set; }
         public static SignalScheduler SignalScheduler { get; set; }
+        
+        // Signal Button System
+        public static SignalButtonUI SignalButton { get; set; }
 
         // Null-check helpers
         public static bool HasAudio() => Audio != null;
@@ -93,6 +97,7 @@ namespace Core
         public static bool HasCurrency() => Currency != null;
         public static bool HasBillInteraction() => BillInteraction != null;
         public static bool HasSignalScheduler() => SignalScheduler != null;
+        public static bool HasSignalButton() => SignalButton != null;
         
         // Human System Config Helpers
         public static bool HasHumanConfig() => HumanConfig != null;
@@ -150,6 +155,7 @@ namespace Core
             Currency = null;
             BillInteraction = null;
             SignalScheduler = null;
+            SignalButton = null;
         }
     }
 }

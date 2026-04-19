@@ -380,6 +380,7 @@ GameObject:
   - component: {fileID: 6833564628815296432}
   - component: {fileID: 8461239742778086643}
   - component: {fileID: 1766810136562320610}
+  - component: {fileID: 5877491298920278024}
   m_Layer: 0
   m_Name: human_5
   m_TagString: Untagged
@@ -554,3 +555,18 @@ MonoBehaviour:
   _stateTimer: 0
   _homeHouse: {fileID: 0}
   _config: {fileID: 0}
+--- !u!114 &5877491298920278024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7035455997009476463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cad95211e0aaed43b2b7224b86f787a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Utilities.SortingGroupByYPosition
+  _maxY: 10
+  _minY: -10
+  _debugLog: 0

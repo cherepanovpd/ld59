@@ -607,6 +607,7 @@ GameObject:
   - component: {fileID: 8991682044607158807}
   - component: {fileID: 8832783936603302028}
   - component: {fileID: 4056834978965008313}
+  - component: {fileID: 6844934959030085968}
   m_Layer: 0
   m_Name: House
   m_TagString: Untagged
@@ -744,3 +745,18 @@ MonoBehaviour:
   _houseId: 
   _maxResidents: 3
   _spawnRadius: 2
+--- !u!114 &6844934959030085968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6383026615466736497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cad95211e0aaed43b2b7224b86f787a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Utilities.SortingGroupByYPosition
+  _maxY: 10
+  _minY: -10
+  _debugLog: 0

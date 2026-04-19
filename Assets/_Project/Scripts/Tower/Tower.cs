@@ -115,6 +115,8 @@ namespace Project.Tower
             });
         }
 
+        public void TriggerBlinkWithRing() => TriggerBlinkWithRing(0, 0);
+
         /// <summary>
         /// Starts continuous blinking (if not already active) and optionally launches rings on each blink.
         /// This method does NOT automatically launch rings; you need to hook into blink events.

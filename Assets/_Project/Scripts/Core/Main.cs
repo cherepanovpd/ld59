@@ -1,6 +1,12 @@
 // Path: Assets/_Project/Scripts/Core/Main.cs
 
+using Data.Configs;
+
 using Project.Core;
+using Project.Currency.Config;
+using Project.DayNight.Config;
+using Project.HouseGenerator.Config;
+using Project.Human.Config;
 
 using UnityEngine;
 using UnityEngine.Events;
@@ -14,6 +20,16 @@ namespace Core
     /// </summary>
     public class Main : MonoBehaviour
     {
+        public HouseConfig hc;
+        public GameConfig gc;
+        public HumanConfig hg;
+        public DayNightConfig dnc;
+        public CurrencyConfig cc;
+        public BodyColorConfig BodyColorConfig;
+        public HeadColorConfig HeadColorConfig;
+        public HairColorConfig HairColorConfig;
+        public GameParameters gp;
+        
         [Header("Game State")]
         [SerializeField] private GameState _currentState = GameState.Intro;
         [SerializeField] private GameState _previousState = GameState.Intro;

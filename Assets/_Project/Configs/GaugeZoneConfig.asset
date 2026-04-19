@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc40fa050bc11344197137eeb92d8123, type: 3}
+  m_Name: GaugeZoneConfig
+  m_EditorClassIdentifier: Assembly-CSharp::Project.UI.SignalButton.Config.GaugeZoneConfig
+  _redZoneRange: {x: 0, y: 60}
+  _yellowZoneRange: {x: 60, y: 120}
+  _greenZoneRange: {x: 120, y: 180}
+  _redZoneColor: {r: 1, g: 0, b: 0, a: 1}
+  _yellowZoneColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  _greenZoneColor: {r: 0, g: 1, b: 0, a: 1}
+  _redZoneMultiplier: 0.5
+  _yellowZoneMultiplier: 1
+  _greenZoneMultiplier: 3
