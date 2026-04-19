@@ -1393,7 +1393,6 @@ GameObject:
   - component: {fileID: 411360896}
   - component: {fileID: 411360900}
   - component: {fileID: 411360902}
-  - component: {fileID: 411360901}
   m_Layer: 0
   m_Name: --- GAME ---
   m_TagString: Untagged
@@ -1494,22 +1493,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dbdcad84c91dfd45946ceeee2925308, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Utilities.EventSystem
---- !u!114 &411360901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 411360894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebd4fe9e2b279df458de17ad91c34f8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Project.Currency.BillManager
-  _config: {fileID: 0}
-  _initialPoolSize: 20
-  _maxPoolSize: 100
-  _preloadOnAwake: 1
 --- !u!114 &411360902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3105,6 +3088,72 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 947497622}
   m_CullTransparentMesh: 1
+--- !u!1 &1008347963
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1008347966}
+  - component: {fileID: 1008347965}
+  - component: {fileID: 1008347964}
+  m_Layer: 0
+  m_Name: --- BILL MANAGER ---
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1008347964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1008347963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8149138b690fb4e4eb5046e65d0bac7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Currency.BillInteractionSystem
+  _maxDetectedBills: 100
+  _billLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  _debugLog: 0
+--- !u!114 &1008347965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1008347963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebd4fe9e2b279df458de17ad91c34f8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Currency.BillManager
+  _config: {fileID: 11400000, guid: f12e603b780e7c84d8bd2043da298fc4, type: 2}
+  _initialPoolSize: 20
+  _maxPoolSize: 100
+  _preloadOnAwake: 1
+--- !u!4 &1008347966
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1008347963}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1065322813
 GameObject:
   m_ObjectHideFlags: 0
@@ -5282,6 +5331,7 @@ SceneRoots:
   - {fileID: 1562557707}
   - {fileID: 83315611}
   - {fileID: 411360895}
+  - {fileID: 1008347966}
   - {fileID: 1836047996}
   - {fileID: 1184524045}
   - {fileID: 944428422}

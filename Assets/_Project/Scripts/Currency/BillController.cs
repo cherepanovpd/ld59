@@ -42,6 +42,7 @@ namespace Project.Currency
         private int _value = 10;
         private Vector3 _spawnPosition;
         private CurrencyConfig _config;
+        private bool _isUsingInteractionSystem = false; // Track if we're using the new BillInteractionSystem
 
         // Animation references
         private Sequence _idleSequence;
@@ -96,11 +97,33 @@ namespace Project.Currency
 
         private void OnMouseEnter()
         {
+            // If the new interaction system is active, ignore legacy mouse events
+            // to prevent double triggering
+            if (_isUsingInteractionSystem)
+                return;
+
             if (_currentState == BillState.Idle)
             {
                 SetState(BillState.Hovered);
                 StartFlightToCounter();
             }
+        }
+
+        /// <summary>
+        /// Called by BillInteractionSystem when mouse enters/exits this bill.
+        /// </summary>
+        public void SetHovered(bool isHovered)
+        {
+            if (!_isUsingInteractionSystem)
+                _isUsingInteractionSystem = true; // Auto-detect that we're using the new system
+
+            if (isHovered && _currentState == BillState.Idle)
+            {
+                SetState(BillState.Hovered);
+                StartFlightToCounter();
+            }
+            // Note: We don't handle "unhover" because once a bill starts flying,
+            // it can't be unhovered (it's already collected)
         }
 
         #endregion
@@ -122,6 +145,13 @@ namespace Project.Currency
                 if (randomSprite != null)
                     _spriteRenderer.sprite = randomSprite;
             }
+            
+            _cachedTransform.localScale = _cachedScale;
+
+            if (_spriteRenderer != null)
+            {
+                _spriteRenderer.color = new Color(_spriteRenderer.color.r, _spriteRenderer.color.g, _spriteRenderer.color.b, 1f);
+            }
 
             // Scale collider
             if (_collider != null && _spriteRenderer != null)
@@ -136,6 +166,8 @@ namespace Project.Currency
             {
                 _light2D.intensity = _config.MaxLightIntensity;
             }
+
+            SetState(BillState.Idle);
         }
 
         private void EnsureRaycaster()

@@ -279,7 +279,7 @@ namespace Project.DayNight.UI
             if (_analogDialContinuousRotation)
             {
                 // Continuous rotation: midnight rotation + 360° per day
-                rotationZ = _analogDialMidnightRotation + normalizedTime * 360f;
+                rotationZ = _analogDialMidnightRotation - normalizedTime * 360f;
             }
             else
             {
@@ -287,13 +287,13 @@ namespace Project.DayNight.UI
                 if (normalizedTime <= 0.5f)
                 {
                     // Midnight → noon
-                    rotationZ = Mathf.Lerp(_analogDialMidnightRotation, _analogDialNoonRotation, normalizedTime * 2f);
+                    rotationZ = -Mathf.Lerp(_analogDialMidnightRotation, _analogDialNoonRotation, normalizedTime * 2f);
                 }
                 else
                 {
                     // Noon → next midnight (midnight rotation + 360° for continuity)
                     float nextMidnightRotation = _analogDialMidnightRotation + 360f;
-                    rotationZ = Mathf.Lerp(_analogDialNoonRotation, nextMidnightRotation, (normalizedTime - 0.5f) * 2f);
+                    rotationZ = -Mathf.Lerp(_analogDialNoonRotation, nextMidnightRotation, (normalizedTime - 0.5f) * 2f);
                 }
             }
 

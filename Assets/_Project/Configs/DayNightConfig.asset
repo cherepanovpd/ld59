@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DayNightConfig
   m_EditorClassIdentifier: Assembly-CSharp::Project.DayNight.Config.DayNightConfig
   _dayLengthSeconds: 60
-  _startTimeNormalized: 0.624
+  _startTimeNormalized: 0
   _autoStart: 1
   _vignetteIntensityCurve:
     serializedVersion: 2

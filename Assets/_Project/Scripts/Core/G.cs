@@ -52,6 +52,7 @@ namespace Core
         public static CurrencyConfig CurrencyConfig { get; set; }
         public static BillManager BillManager { get; set; }
         public static CurrencyCounter Currency { get; set; }
+        public static BillInteractionSystem BillInteraction { get; set; }
 
         // Null-check helpers
         public static bool HasAudio() => Audio != null;
@@ -73,6 +74,7 @@ namespace Core
         public static bool HasCurrencyConfig() => CurrencyConfig != null;
         public static bool HasBillManager() => BillManager != null;
         public static bool HasCurrency() => Currency != null;
+        public static bool HasBillInteraction() => BillInteraction != null;
 
         /// <summary>
         /// Safety check: logs a warning if a required system is missing.
@@ -109,6 +111,7 @@ namespace Core
             CurrencyConfig = null;
             BillManager = null;
             Currency = null;
+            BillInteraction = null;
         }
     }
 }
