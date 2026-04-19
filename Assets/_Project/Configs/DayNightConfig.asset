@@ -12,25 +12,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0331e11aa94ff240af92ea2b7ccd5ac, type: 3}
   m_Name: DayNightConfig
   m_EditorClassIdentifier: Assembly-CSharp::Project.DayNight.Config.DayNightConfig
-  _dayLengthSeconds: 300
-  _startTimeNormalized: 0.25
+  _dayLengthSeconds: 60
+  _startTimeNormalized: 0.624
   _autoStart: 1
-  _exposureCurve:
+  _vignetteIntensityCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.3
       inSlope: 0
-      outSlope: -1
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
+      time: 0.5
+      value: 0.1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
       time: 1
-      value: 0
-      inSlope: -1
+      value: 0.3
+      inSlope: 0
       outSlope: 0
       tangentMode: 0
       weightedMode: 0
@@ -159,3 +168,31 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 5
     m_NumAlphaKeys: 4
+  _sunOrbitCenter: {x: 0, y: 0}
+  _sunOrbitRadius: 10
+  _sunStartAngleOffset: 0
+  _sunAdjustIntensity: 1
+  _sunIntensityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

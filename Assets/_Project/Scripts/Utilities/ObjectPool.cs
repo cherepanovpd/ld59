@@ -17,7 +17,7 @@ namespace Utilities
         [SerializeField] private int _initialSize = 10;
         [SerializeField] private int _maxSize = 100;
         [SerializeField] private bool _autoExpand = true;
-        [SerializeField] private bool _poolOnAwake = true;
+        [SerializeField] private bool _poolOnAwake = false;
 
         [Header("Debug")]
         [SerializeField] private bool _showStatistics = false;
@@ -57,6 +57,19 @@ namespace Utilities
             _poolContainer.localPosition = Vector3.zero;
 
             Preload(_initialSize);
+        }
+
+        /// <summary>
+        /// Set the prefab for this pool at runtime (must be called before Initialize).
+        /// </summary>
+        public void SetPrefab(GameObject prefab)
+        {
+            if (_prefab != null)
+            {
+                Debug.LogWarning("[ObjectPool] Prefab already set. Clearing existing pool.");
+                Clear();
+            }
+            _prefab = prefab;
         }
 
         /// <summary>

@@ -7,9 +7,11 @@ using InputSystem;
 
 using Project.Audio;
 using Project.Core;
+using Project.Currency.Config;
 using Project.DayNight;
 using Project.DayNight.Config;
 using Project.HouseGenerator.Config;
+using Project.Effects;
 using Project.Utilities;
 using Project.UI.Intro;
 
@@ -19,6 +21,8 @@ using UnityEngine;
 
 using Utilities;
 using Common.Runtime.Components;
+
+using Project.Currency;
 
 namespace Core
 {
@@ -44,6 +48,10 @@ namespace Core
         public static DayNightVolumeController DayNight { get; set; }
         public static DayNightSystem DayNightSystem { get; set; }
         public static DayNightConfig DayNightConfig { get; set; }
+        public static WindowLightManager WindowLightManager { get; set; }
+        public static CurrencyConfig CurrencyConfig { get; set; }
+        public static BillManager BillManager { get; set; }
+        public static CurrencyCounter Currency { get; set; }
 
         // Null-check helpers
         public static bool HasAudio() => Audio != null;
@@ -61,6 +69,10 @@ namespace Core
         public static bool HasPool() => Pool != null;
         public static bool HasEvents() => Events != null;
         public static bool HasCamera() => Camera != null;
+        public static bool HasWindowLightManager() => WindowLightManager != null;
+        public static bool HasCurrencyConfig() => CurrencyConfig != null;
+        public static bool HasBillManager() => BillManager != null;
+        public static bool HasCurrency() => Currency != null;
 
         /// <summary>
         /// Safety check: logs a warning if a required system is missing.
@@ -93,6 +105,10 @@ namespace Core
             DayNight = null;
             DayNightSystem = null;
             DayNightConfig = null;
+            WindowLightManager = null;
+            CurrencyConfig = null;
+            BillManager = null;
+            Currency = null;
         }
     }
 }

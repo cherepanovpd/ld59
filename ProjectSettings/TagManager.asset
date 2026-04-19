@@ -3,12 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - SignalRing
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Signal
   - Water
   - UI
   - 
@@ -49,6 +50,15 @@ TagManager:
     locked: 0
   - name: House_Roof
     uniqueID: 2003988619
+    locked: 0
+  - name: Tower_Signal
+    uniqueID: 4149092413
+    locked: 0
+  - name: Bill
+    uniqueID: 4131163785
+    locked: 0
+  - name: Intro
+    uniqueID: 984573769
     locked: 0
   m_RenderingLayers:
   - Default

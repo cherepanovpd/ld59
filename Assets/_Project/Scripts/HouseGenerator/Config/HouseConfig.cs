@@ -35,6 +35,11 @@ namespace Project.HouseGenerator.Config
         [Tooltip("Prefabs for doors, windows, chimneys, etc.")]
         private GameObject[] _houseElementPrefabs = new GameObject[0];
 
+        [Header("Window Lighting")]
+        [SerializeField]
+        [Tooltip("Configuration for window lighting behavior.")]
+        private WindowLightingConfig _windowLightingConfig = new WindowLightingConfig();
+
         /// <summary>
         /// Base saturation (S in HSV). Default is 10.
         /// </summary>
@@ -54,6 +59,11 @@ namespace Project.HouseGenerator.Config
         /// Prefabs for doors, windows, chimneys, etc.
         /// </summary>
         public GameObject[] HouseElementPrefabs => _houseElementPrefabs;
+
+        /// <summary>
+        /// Configuration for window lighting behavior.
+        /// </summary>
+        public WindowLightingConfig WindowLightingConfig => _windowLightingConfig;
 
         #region Self-Registration
 
@@ -86,6 +96,7 @@ namespace Project.HouseGenerator.Config
             _baseValue = 100f;
             _roofColorPairs = new HouseColorPair[0];
             _houseElementPrefabs = new GameObject[0];
+            _windowLightingConfig = new WindowLightingConfig();
             UnityEditor.EditorUtility.SetDirty(this);
             Debug.Log("[HouseConfig] Reset to defaults.");
         }

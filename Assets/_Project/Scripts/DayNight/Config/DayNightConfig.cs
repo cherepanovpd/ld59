@@ -48,6 +48,28 @@ namespace Project.DayNight.Config
         [Tooltip("Optional gradient for sky tint (could be used for skybox or ambient light).")]
         private Gradient _skyTintGradient;
 
+        [Header("Sun Orbit Configuration")]
+        [SerializeField]
+        [Tooltip("Center point of the sun's circular orbit in world space.")]
+        private Vector2 _sunOrbitCenter = Vector2.zero;
+
+        [SerializeField]
+        [Tooltip("Radius of the sun's circular orbit in world units.")]
+        private float _sunOrbitRadius = 10f;
+
+        [SerializeField]
+        [Tooltip("Angle offset in degrees (0 = east, 90 = north, 180 = west, 270 = south).")]
+        [Range(0f, 360f)]
+        private float _sunStartAngleOffset = 0f;
+
+        [SerializeField]
+        [Tooltip("If true, the sun's intensity will change based on time of day (brighter at noon).")]
+        private bool _sunAdjustIntensity = true;
+
+        [SerializeField]
+        [Tooltip("Curve mapping normalized time (0-1) to sun light intensity (0-1). Default peaks at noon (0.5).")]
+        private AnimationCurve _sunIntensityCurve = AnimationCurve.EaseInOut(0f, 0f, 0.5f, 1f);
+
         /// <summary>
         /// Real‑time seconds for a full day cycle (0→1).
         /// </summary>
@@ -87,6 +109,31 @@ namespace Project.DayNight.Config
         /// Optional gradient for sky tint (could be used for skybox or ambient light).
         /// </summary>
         public Gradient SkyTintGradient => _skyTintGradient;
+
+        /// <summary>
+        /// Center point of the sun's circular orbit in world space.
+        /// </summary>
+        public Vector2 SunOrbitCenter => _sunOrbitCenter;
+
+        /// <summary>
+        /// Radius of the sun's circular orbit in world units.
+        /// </summary>
+        public float SunOrbitRadius => _sunOrbitRadius;
+
+        /// <summary>
+        /// Angle offset in degrees (0 = east, 90 = north, 180 = west, 270 = south).
+        /// </summary>
+        public float SunStartAngleOffset => _sunStartAngleOffset;
+
+        /// <summary>
+        /// If true, the sun's intensity will change based on time of day (brighter at noon).
+        /// </summary>
+        public bool SunAdjustIntensity => _sunAdjustIntensity;
+
+        /// <summary>
+        /// Curve mapping normalized time (0-1) to sun light intensity (0-1). Default peaks at noon (0.5).
+        /// </summary>
+        public AnimationCurve SunIntensityCurve => _sunIntensityCurve;
 
         #region Self‑Registration
 

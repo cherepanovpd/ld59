@@ -11,20 +11,14 @@ using UnityEngine.UI;
 namespace Project.DayNight.UI
 {
     /// <summary>
-    /// Displays in‑game time as either an analog clock (rotating hands) or a digital clock (text).
-    /// Demonstrates how to use DayNightSystem time parameters for clock sprite integration.
+    /// Displays in‑game time with both analog dial (rotating RectTransform) and digital clock (TMP text).
+    /// Analog dial rotates according to normalized time (0 = midnight, 0.5 = noon).
+    /// Digital clock supports 24‑hour or 12‑hour with AM/PM format.
     /// Zero allocations in Update loop, supports event‑based updates for efficiency.
     /// </summary>
     public class ClockDisplay : MonoBehaviour
     {
         #region Configuration Enums
-
-        public enum DisplayMode
-        {
-            Analog,
-            Digital,
-            Both
-        }
 
         public enum UpdateFrequency
         {
@@ -63,7 +57,7 @@ namespace Project.DayNight.UI
             // 12‑hour format strings (1‑12)
             for (int i = 0; i <= 12; i++)
             {
-                s_cachedHour12Strings[i] = i == 0 ? "12" : i.ToString();
+                s_cachedHour12Strings[i] = i == 0 ? "12" : i.ToString("00");
             }
         }
 
@@ -72,10 +66,6 @@ namespace Project.DayNight.UI
         #region Serialized Fields
 
         [Header("Display Settings")]
-        [SerializeField]
-        [Tooltip("Whether to show analog hands, digital text, or both.")]
-        private DisplayMode _displayMode = DisplayMode.Analog;
-
         [SerializeField]
         [Tooltip("How often the clock should update its display.")]
         private UpdateFrequency _updateFrequency = UpdateFrequency.OnTimeChangeEvent;
@@ -86,35 +76,39 @@ namespace Project.DayNight.UI
 
         [Header("Analog Clock References")]
         [SerializeField]
-        [Tooltip("Transform representing the hour hand. Will be rotated around its local Z axis.")]
-        private Transform _hourHandTransform;
+        [Tooltip("RectTransform of the analog dial (the whole clock face). Will be rotated around its Z axis.")]
+        private RectTransform _analogDialRectTransform;
 
         [SerializeField]
-        [Tooltip("Transform representing the minute hand. Will be rotated around its local Z axis.")]
-        private Transform _minuteHandTransform;
+        [Tooltip("Z rotation (degrees) at midnight (normalized time = 0).")]
+        private float _analogDialMidnightRotation = -180f;
 
         [SerializeField]
-        [Tooltip("Optional second hand transform (if present).")]
-        private Transform _secondHandTransform;
+        [Tooltip("Z rotation (degrees) at noon (normalized time = 0.5).")]
+        private float _analogDialNoonRotation = 0f;
+
+        [SerializeField]
+        [Tooltip("If true, the dial rotates continuously (full 360° per day). If false, uses linear interpolation between midnight and noon.")]
+        private bool _analogDialContinuousRotation = true;
 
         [Header("Digital Clock References")]
         [SerializeField]
-        [Tooltip("TextMeshPro component to display digital time. If using Unity UI Text, assign a Text component and we'll fall back.")]
+        [Tooltip("TextMeshPro component to display digital time.")]
         private TMP_Text _digitalText;
 
         [SerializeField]
         [Tooltip("Optional TextMeshPro component for AM/PM indicator (used only in 12‑hour format).")]
         private TMP_Text _amPmText;
 
-        // Fallback for Unity UI Text (legacy support)
-        private Text _legacyDigitalText;
-        private Text _legacyAmPmText;
+        [SerializeField]
+        [Tooltip("Optional background Image behind digital clock. Its color will be evaluated from the time gradient.")]
+        private Image _digitalBackgroundImage;
+
+        [SerializeField]
+        [Tooltip("Gradient mapping normalized time (0 = midnight, 0.5 = noon) to background color.")]
+        private Gradient _timeGradient = new Gradient();
 
         [Header("Advanced")]
-        [SerializeField]
-        [Tooltip("If true, analog hour hand moves smoothly (continuous rotation). If false, snaps to discrete hours.")]
-        private bool _smoothAnalogHands = true;
-
         [SerializeField]
         [Tooltip("Manual override for testing: set a specific normalized time (0‑1). Only works in Manual update frequency.")]
         [Range(0f, 1f)]
@@ -132,10 +126,16 @@ namespace Project.DayNight.UI
         private int _lastMinute = -1;
         private bool _lastWasPm = false;
 
+        // Background color caching
+        private float _lastNormalizedTimeForBackground = -1f;
+        private Color _lastBackgroundColor;
+
         // Performance flags
         private bool _isSubscribedToEvents;
-        private bool _hasAnalogComponents;
-        private bool _hasDigitalComponents;
+        private bool _hasAnalogDial;
+        private bool _hasDigitalText;
+        private bool _hasAmPmText;
+        private bool _hasBackgroundImage;
 
         #endregion
 
@@ -188,43 +188,24 @@ namespace Project.DayNight.UI
 
         private void ValidateComponents()
         {
-            _hasAnalogComponents = _hourHandTransform != null && _minuteHandTransform != null;
-            
-            // Check for digital text components (TMP_Text or legacy Text)
-            bool hasTmpDigital = _digitalText != null;
-            bool hasLegacyDigital = false;
-            
-            // If TMP_Text is null, try to find a legacy Text component on the same GameObject
-            if (!hasTmpDigital && _digitalText == null)
-            {
-                _legacyDigitalText = GetComponent<Text>();
-                if (_legacyDigitalText == null && transform.parent != null)
-                    _legacyDigitalText = transform.parent.GetComponentInChildren<Text>();
-                hasLegacyDigital = _legacyDigitalText != null;
-            }
-            
-            _hasDigitalComponents = hasTmpDigital || hasLegacyDigital;
+            _hasAnalogDial = _analogDialRectTransform != null;
+            _hasDigitalText = _digitalText != null;
+            _hasAmPmText = _amPmText != null;
+            _hasBackgroundImage = _digitalBackgroundImage != null;
 
-            // Similarly for AM/PM text
-            if (_amPmText == null)
+            if (!_hasAnalogDial)
             {
-                _legacyAmPmText = GetComponentInChildren<Text>(true);
-                // Could be a separate search but we'll keep it simple
+                Debug.LogWarning("[ClockDisplay] Analog dial RectTransform is not assigned.", this);
             }
 
-            if (_displayMode == DisplayMode.Analog && !_hasAnalogComponents)
+            if (!_hasDigitalText)
             {
-                Debug.LogError("[ClockDisplay] Analog mode selected but hour/minute hand transforms are not assigned.", this);
+                Debug.LogError("[ClockDisplay] Digital text component (TMP_Text) is not assigned.", this);
             }
 
-            if (_displayMode == DisplayMode.Digital && !_hasDigitalComponents)
+            if (_timeFormat == TimeFormat.Hour12WithAmPm && !_hasAmPmText)
             {
-                Debug.LogError("[ClockDisplay] Digital mode selected but digital text component is not assigned.", this);
-            }
-
-            if (_displayMode == DisplayMode.Both && (!_hasAnalogComponents || !_hasDigitalComponents))
-            {
-                Debug.LogWarning("[ClockDisplay] Both mode selected but some components are missing.", this);
+                Debug.LogWarning("[ClockDisplay] AM/PM text component is not assigned but 12‑hour format is selected.", this);
             }
         }
 
@@ -279,97 +260,49 @@ namespace Project.DayNight.UI
                 hour24 = normalizedTime * 24f;
             }
 
-            switch (_displayMode)
-            {
-                case DisplayMode.Analog:
-                    UpdateAnalogDisplay(normalizedTime, hour24);
-                    break;
-                case DisplayMode.Digital:
-                    UpdateDigitalDisplay(hour24);
-                    break;
-                case DisplayMode.Both:
-                    UpdateAnalogDisplay(normalizedTime, hour24);
-                    UpdateDigitalDisplay(hour24);
-                    break;
-            }
+            // Update analog dial
+            UpdateAnalogDial(normalizedTime);
+
+            // Update digital display
+            UpdateDigitalDisplay(hour24);
+
+            // Update background color
+            UpdateBackgroundColor(normalizedTime);
         }
 
-        private void UpdateAnalogDisplay(float normalizedTime, float hour24)
+        private void UpdateAnalogDial(float normalizedTime)
         {
-            if (!_hasAnalogComponents)
+            if (!_hasAnalogDial)
                 return;
 
-            // Convert to 12‑hour format for traditional analog clock
-            float hour12 = hour24 % 12f;
-            float minutes = (hour24 % 1f) * 60f;
-            float seconds = (minutes % 1f) * 60f;
-
-            // Calculate rotations with proper smooth progression
-            // Hour hand: 360° per 12 hours, but also moves with minutes (0.5° per minute)
-            // Total minutes in 12 hours = 720
-            float hourAngle = ((hour12 * 60f) + minutes) / 720f * 360f;
-
-            // Minute hand: 360° per 60 minutes, also moves with seconds
-            float minuteAngle = minutes / 60f * 360f;
-
-            // Second hand: 360° per 60 seconds
-            float secondAngle = seconds / 60f * 360f;
-
-            // Apply rotations (negative for clockwise rotation)
-            if (_smoothAnalogHands)
+            float rotationZ;
+            if (_analogDialContinuousRotation)
             {
-                // Continuous rotation (smooth movement)
-                _hourHandTransform.localRotation = Quaternion.Euler(0f, 0f, -hourAngle);
-                _minuteHandTransform.localRotation = Quaternion.Euler(0f, 0f, -minuteAngle);
-                if (_secondHandTransform != null)
-                    _secondHandTransform.localRotation = Quaternion.Euler(0f, 0f, -secondAngle);
+                // Continuous rotation: midnight rotation + 360° per day
+                rotationZ = _analogDialMidnightRotation + normalizedTime * 360f;
             }
             else
             {
-                // Discrete steps (snap to whole minutes/hours)
-                int discreteHour = Mathf.FloorToInt(hour12);
-                int discreteMinute = Mathf.FloorToInt(minutes);
-                int discreteSecond = Mathf.FloorToInt(seconds);
+                // Linear interpolation between midnight and noon, then noon and next midnight
+                if (normalizedTime <= 0.5f)
+                {
+                    // Midnight → noon
+                    rotationZ = Mathf.Lerp(_analogDialMidnightRotation, _analogDialNoonRotation, normalizedTime * 2f);
+                }
+                else
+                {
+                    // Noon → next midnight (midnight rotation + 360° for continuity)
+                    float nextMidnightRotation = _analogDialMidnightRotation + 360f;
+                    rotationZ = Mathf.Lerp(_analogDialNoonRotation, nextMidnightRotation, (normalizedTime - 0.5f) * 2f);
+                }
+            }
 
-                // Recalculate angles for discrete positions
-                float discreteHourAngle = ((discreteHour * 60f) + discreteMinute) / 720f * 360f;
-                float discreteMinuteAngle = discreteMinute / 60f * 360f;
-                float discreteSecondAngle = discreteSecond / 60f * 360f;
-
-                _hourHandTransform.localRotation = Quaternion.Euler(0f, 0f, -discreteHourAngle);
-                _minuteHandTransform.localRotation = Quaternion.Euler(0f, 0f, -discreteMinuteAngle);
-                if (_secondHandTransform != null)
-                    _secondHandTransform.localRotation = Quaternion.Euler(0f, 0f, -discreteSecondAngle);
-            }
-        }
-
-        private void SetDigitalText(string text)
-        {
-            if (_digitalText != null)
-            {
-                _digitalText.text = text;
-            }
-            else if (_legacyDigitalText != null)
-            {
-                _legacyDigitalText.text = text;
-            }
-        }
-
-        private void SetAmPmText(string text)
-        {
-            if (_amPmText != null)
-            {
-                _amPmText.text = text;
-            }
-            else if (_legacyAmPmText != null)
-            {
-                _legacyAmPmText.text = text;
-            }
+            _analogDialRectTransform.localRotation = Quaternion.Euler(0f, 0f, rotationZ);
         }
 
         private void UpdateDigitalDisplay(float hour24)
         {
-            if (!_hasDigitalComponents)
+            if (!_hasDigitalText)
                 return;
 
             // Extract hour and minute
@@ -379,9 +312,8 @@ namespace Project.DayNight.UI
             // Check if we need to update the string (avoid unnecessary allocations)
             bool hourChanged = hour != _lastHour;
             bool minuteChanged = minute != _lastMinute;
-            bool formatChanged = false;
 
-            if (!hourChanged && !minuteChanged && !formatChanged)
+            if (!hourChanged && !minuteChanged)
                 return; // No change, skip update
 
             _lastHour = hour;
@@ -417,31 +349,37 @@ namespace Project.DayNight.UI
             _cachedTimeString = _stringBuilder.ToString();
 
             // Update UI components
-            SetDigitalText(_cachedTimeString);
+            _digitalText.text = _cachedTimeString;
 
-            if (_timeFormat == TimeFormat.Hour12WithAmPm)
+            if (_timeFormat == TimeFormat.Hour12WithAmPm && _hasAmPmText)
             {
-                SetAmPmText(_cachedAmPmString);
+                _amPmText.text = _cachedAmPmString;
+            }
+        }
+
+        private void UpdateBackgroundColor(float normalizedTime)
+        {
+            if (!_hasBackgroundImage)
+                return;
+
+            // Only update if normalized time changed significantly (threshold 0.001)
+            if (Mathf.Abs(normalizedTime - _lastNormalizedTimeForBackground) < 0.001f)
+                return;
+
+            _lastNormalizedTimeForBackground = normalizedTime;
+            Color newColor = _timeGradient.Evaluate(normalizedTime);
+
+            // Avoid setting the same color (tiny performance)
+            if (newColor != _lastBackgroundColor)
+            {
+                _digitalBackgroundImage.color = newColor;
+                _lastBackgroundColor = newColor;
             }
         }
 
         #endregion
 
         #region Public API
-
-        /// <summary>
-        /// Switch display mode at runtime.
-        /// </summary>
-        public void SetDisplayMode(DisplayMode newMode)
-        {
-            _displayMode = newMode;
-            ValidateComponents();
-
-            if (G.DayNightSystem != null)
-            {
-                UpdateDisplay(G.DayNightSystem.NormalizedTime, G.DayNightSystem.Hour24);
-            }
-        }
 
         /// <summary>
         /// Switch update frequency at runtime.
@@ -470,7 +408,7 @@ namespace Project.DayNight.UI
             _lastHour = -1; // Force refresh
             _lastMinute = -1;
 
-            if (G.DayNightSystem != null && (_displayMode == DisplayMode.Digital || _displayMode == DisplayMode.Both))
+            if (G.DayNightSystem != null)
             {
                 UpdateDigitalDisplay(G.DayNightSystem.Hour24);
             }
@@ -486,6 +424,35 @@ namespace Project.DayNight.UI
             if (_updateFrequency == UpdateFrequency.Manual)
             {
                 UpdateDisplay(_manualNormalizedTime, _manualNormalizedTime * 24f);
+            }
+        }
+
+        /// <summary>
+        /// Set the analog dial rotation mapping directly.
+        /// </summary>
+        /// <param name="midnightRotation">Z rotation at midnight (normalized time = 0)</param>
+        /// <param name="noonRotation">Z rotation at noon (normalized time = 0.5)</param>
+        public void SetAnalogDialRotation(float midnightRotation, float noonRotation)
+        {
+            _analogDialMidnightRotation = midnightRotation;
+            _analogDialNoonRotation = noonRotation;
+            if (G.DayNightSystem != null)
+            {
+                UpdateAnalogDial(G.DayNightSystem.NormalizedTime);
+            }
+        }
+
+        /// <summary>
+        /// Set the time gradient for background color.
+        /// </summary>
+        /// <param name="gradient">New gradient (will be copied)</param>
+        public void SetTimeGradient(Gradient gradient)
+        {
+            _timeGradient = gradient;
+            _lastNormalizedTimeForBackground = -1f; // Force update
+            if (G.DayNightSystem != null)
+            {
+                UpdateBackgroundColor(G.DayNightSystem.NormalizedTime);
             }
         }
 

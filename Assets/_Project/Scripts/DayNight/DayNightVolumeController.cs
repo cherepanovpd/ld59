@@ -107,7 +107,7 @@ namespace Project.DayNight
 
             // Try to get existing overrides; if they don't exist, we'll add them.
             _hasColorAdjustments = _volume.profile.TryGet(out _colorAdjustments);
-            _hasColorAdjustments = _volume.profile.TryGet(out _colorAdjustments);
+            _hasWhiteBalance = _volume.profile.TryGet(out _whiteBalance);
             _hasVignette = _volume.profile.TryGet(out _vignette);
 
             // If any component is missing, log a warning but continue (they may be added later).

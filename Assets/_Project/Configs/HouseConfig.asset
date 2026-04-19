@@ -31,13 +31,26 @@ MonoBehaviour:
     _darkColor: {r: 0.75294125, g: 0.22352943, b: 0.16862746, a: 1}
   _houseElementPrefabs:
   - {fileID: 8153110730846294915, guid: cfee755d49a90f54986b5bfcd6606532, type: 3}
-  - {fileID: 4001852246049932579, guid: f2541264480182147a7a358e0474a582, type: 3}
-  - {fileID: 1856609231579378979, guid: dfbc8a73a55e8b84db5ede0aed2c6ec3, type: 3}
-  - {fileID: 2850816029477567194, guid: c3bacaa146a1891419dc949be893858c, type: 3}
-  - {fileID: 4463254235355906846, guid: 9fae43d769c4a4344b3d0b00b1fbf16e, type: 3}
-  - {fileID: 4055952076393391304, guid: 5d2a70c692d91494abee8d65c59051e9, type: 3}
-  - {fileID: 7134940765553341987, guid: 1c5f3c88276c5db4e8b1d58e06ba4845, type: 3}
-  - {fileID: 1856609231579378979, guid: d1905f0e15292374591cd2dcf07bcfaa, type: 3}
-  - {fileID: 2850816029477567194, guid: 594cb069d474b434db955200628fa8a9, type: 3}
-  - {fileID: 4463254235355906846, guid: 89c6621ce433f7940b135b089ba1140f, type: 3}
-  - {fileID: 4055952076393391304, guid: 971de101b573fda4e8bbfe230d426da9, type: 3}
+  - {fileID: 863127273770779655, guid: f2541264480182147a7a358e0474a582, type: 3}
+  - {fileID: 1434113174614832708, guid: dfbc8a73a55e8b84db5ede0aed2c6ec3, type: 3}
+  - {fileID: 5586901184564260307, guid: c3bacaa146a1891419dc949be893858c, type: 3}
+  - {fileID: 4258027892961989388, guid: 9fae43d769c4a4344b3d0b00b1fbf16e, type: 3}
+  - {fileID: 1112651544598978129, guid: 5d2a70c692d91494abee8d65c59051e9, type: 3}
+  - {fileID: 6223708302770047107, guid: 1c5f3c88276c5db4e8b1d58e06ba4845, type: 3}
+  - {fileID: 2801161017501788189, guid: d1905f0e15292374591cd2dcf07bcfaa, type: 3}
+  - {fileID: 1259156179974664508, guid: 594cb069d474b434db955200628fa8a9, type: 3}
+  - {fileID: 1320941402695789693, guid: 89c6621ce433f7940b135b089ba1140f, type: 3}
+  _windowLightingConfig:
+    _lightOnColor: {r: 1, g: 0.9, b: 0.6, a: 1}
+    _lightOffColor: {r: 0.24313726, g: 0.5921569, b: 0.76862746, a: 1}
+    _lightOnIntervals:
+    - _startHour: 20
+      _endHour: 2
+    _lightOffIntervals:
+    - _startHour: 2
+      _endHour: 20
+    _gradualOnDurationMinutes: 60
+    _gradualOffDurationMinutes: 60
+    _useSimpleMode: 1
+    _lightsOnStartHour: 20
+    _lightsOffStartHour: 24
