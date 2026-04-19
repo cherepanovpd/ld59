@@ -27,6 +27,7 @@ namespace Project.Effects
         // Registered windows
         private readonly List<WindowLightController> _windows = new List<WindowLightController>();
         private float _lastProcessedHour = -1f;
+        private int _previousLitCount = -1; // Tracks how many windows were lit in the previous update
 
         #region Unity Lifecycle
 
@@ -140,6 +141,8 @@ namespace Project.Effects
         /// </summary>
         private void UpdateAllWindows(float currentHour)
         {
+            int litCount = 0;
+            
             // Iterate backwards to allow safe removal if we ever decide to auto‑remove nulls
             for (int i = _windows.Count - 1; i >= 0; i--)
             {
@@ -152,7 +155,37 @@ namespace Project.Effects
                 }
 
                 window.UpdateLightBasedOnTime(currentHour);
+                
+                // Count lit windows
+                if (window.IsLightOn)
+                    litCount++;
             }
+            
+            // Emit event if lighting state changed
+            if (litCount != _previousLitCount)
+            {
+                EmitWindowLightsChangedEvent(currentHour, litCount);
+                _previousLitCount = litCount;
+            }
+        }
+
+        /// <summary>
+        /// Emits a WindowLightsChangedEvent when the overall lighting state changes.
+        /// </summary>
+        /// <param name="currentHour">Current hour when the change occurred.</param>
+        /// <param name="litCount">Number of windows currently lit.</param>
+        private void EmitWindowLightsChangedEvent(float currentHour, int litCount)
+        {
+            if (!G.HasEvents())
+                return;
+
+            bool lightsOn = litCount > 0;
+            var evt = new WindowLightsChangedEvent(lightsOn, currentHour, litCount);
+            G.Events.Trigger(evt);
+            
+            #if UNITY_EDITOR
+            Debug.Log($"[WindowLightManager] Window lights changed: LightsOn={lightsOn}, LitCount={litCount}, Hour={currentHour:F2}");
+            #endif
         }
 
         /// <summary>

@@ -78,6 +78,9 @@ namespace UI
 
         [Header("Buttons")]
         [SerializeField] private Button _continueButton;
+        
+        [Header("UI Canvas")]
+        [SerializeField] private Canvas _uiCanvas;
 
         // Cached references
         private Transform _cachedTransform;
@@ -123,6 +126,7 @@ namespace UI
 
         private void Start()
         {
+            ShowUI(false);
             // No automatic screen showing; pause menu is triggered by input
         }
 
@@ -185,6 +189,11 @@ namespace UI
                 ShowPauseMenu();
         }
 
+        public void ShowUI(bool isShow)
+        {
+            _uiCanvas.gameObject.SetActive(isShow);
+        }
+        
         #endregion
 
         #region Private Helpers
@@ -235,6 +244,7 @@ namespace UI
             }
         }
 
+        
         #endregion
     }
 }

@@ -606,7 +606,7 @@ GameObject:
   - component: {fileID: 2812230370597959693}
   - component: {fileID: 8991682044607158807}
   - component: {fileID: 8832783936603302028}
-  - component: {fileID: 4042116041780252726}
+  - component: {fileID: 4056834978965008313}
   m_Layer: 0
   m_Name: House
   m_TagString: Untagged
@@ -729,7 +729,7 @@ MonoBehaviour:
   _signalRingLayer:
     serializedVersion: 2
     m_Bits: 8
---- !u!114 &4042116041780252726
+--- !u!114 &4056834978965008313
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -738,12 +738,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6383026615466736497}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b58d3fae29eef5b439fe28ceedb80ad9, type: 3}
+  m_Script: {fileID: 11500000, guid: a32f0173b297e4748ad28a8df23ea688, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Project.Currency.HouseAnimator
-  _springScale: 1.1
-  _springDuration: 0.3
-  _scaleUpEase: 27
-  _scaleDownEase: 30
-  _includeRotation: 1
-  _maxRotationAngle: 5
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Human.House
+  _houseId: 
+  _maxResidents: 3
+  _spawnRadius: 2

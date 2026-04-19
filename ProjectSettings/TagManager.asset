@@ -51,6 +51,15 @@ TagManager:
   - name: House_Roof
     uniqueID: 2003988619
     locked: 0
+  - name: Human_Body
+    uniqueID: 3795484423
+    locked: 0
+  - name: Human_Head
+    uniqueID: 3971232609
+    locked: 0
+  - name: Human_Hair
+    uniqueID: 4205317003
+    locked: 0
   - name: Tower_Signal
     uniqueID: 4149092413
     locked: 0

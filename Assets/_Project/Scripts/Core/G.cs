@@ -11,6 +11,7 @@ using Project.Currency.Config;
 using Project.DayNight;
 using Project.DayNight.Config;
 using Project.HouseGenerator.Config;
+using Project.Human.Config;
 using Project.Effects;
 using Project.Utilities;
 using Project.UI.Intro;
@@ -23,6 +24,7 @@ using Utilities;
 using Common.Runtime.Components;
 
 using Project.Currency;
+using Project.Human;
 
 namespace Core
 {
@@ -50,9 +52,22 @@ namespace Core
         public static DayNightConfig DayNightConfig { get; set; }
         public static WindowLightManager WindowLightManager { get; set; }
         public static CurrencyConfig CurrencyConfig { get; set; }
+        public static GameParameters GameParameters { get; set; }
+        
+        // Human System Configs
+        public static HumanConfig HumanConfig { get; set; }
+        public static BodyColorConfig BodyColorConfig { get; set; }
+        public static HeadColorConfig HeadColorConfig { get; set; }
+        public static HairColorConfig HairColorConfig { get; set; }
+        
+        // Human Management
+        public static HumanManager HumanManager { get; set; }
+        public static HumanBehaviorSystem HumanBehaviorSystem { get; set; }
+        
         public static BillManager BillManager { get; set; }
         public static CurrencyCounter Currency { get; set; }
         public static BillInteractionSystem BillInteraction { get; set; }
+        public static SignalScheduler SignalScheduler { get; set; }
 
         // Null-check helpers
         public static bool HasAudio() => Audio != null;
@@ -63,6 +78,7 @@ namespace Core
         public static bool HasMain() => Main != null;
         public static bool HasUI() => UI != null;
         public static bool HasInput() => Input != null;
+        public static bool HasHumanBehaviorSystem() => HumanBehaviorSystem != null;
         public static bool HasSave() => Save != null;
         public static bool HasConfig() => Config != null;
         public static bool HasHouseConfig() => HouseConfig != null;
@@ -72,9 +88,18 @@ namespace Core
         public static bool HasCamera() => Camera != null;
         public static bool HasWindowLightManager() => WindowLightManager != null;
         public static bool HasCurrencyConfig() => CurrencyConfig != null;
+        public static bool HasGameParameters() => GameParameters != null;
         public static bool HasBillManager() => BillManager != null;
         public static bool HasCurrency() => Currency != null;
         public static bool HasBillInteraction() => BillInteraction != null;
+        public static bool HasSignalScheduler() => SignalScheduler != null;
+        
+        // Human System Config Helpers
+        public static bool HasHumanConfig() => HumanConfig != null;
+        public static bool HasBodyColorConfig() => BodyColorConfig != null;
+        public static bool HasHeadColorConfig() => HeadColorConfig != null;
+        public static bool HasHairColorConfig() => HairColorConfig != null;
+        public static bool HasHumanManager() => HumanManager != null;
 
         /// <summary>
         /// Safety check: logs a warning if a required system is missing.
@@ -109,9 +134,22 @@ namespace Core
             DayNightConfig = null;
             WindowLightManager = null;
             CurrencyConfig = null;
+            GameParameters = null;
+            
+            // Human System Configs
+            HumanConfig = null;
+            BodyColorConfig = null;
+            HeadColorConfig = null;
+            HairColorConfig = null;
+            
+            // Human Management
+            HumanManager = null;
+            HumanBehaviorSystem = null;
+            
             BillManager = null;
             Currency = null;
             BillInteraction = null;
+            SignalScheduler = null;
         }
     }
 }

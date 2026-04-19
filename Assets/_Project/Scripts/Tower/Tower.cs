@@ -93,6 +93,8 @@ namespace Project.Tower
                 Debug.LogWarning($"{nameof(Tower)}: No TowerLightBlinker assigned.", this);
                 return;
             }
+            
+            G.Audio.PlaySFX("signal");
 
             IsBlinking = true;
             

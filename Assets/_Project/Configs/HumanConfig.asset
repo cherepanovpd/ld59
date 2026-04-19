@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41317c3a108635045a392a4cac2b621b, type: 3}
+  m_Name: HumanConfig
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Human.Config.HumanConfig
+  _humanPrefabs:
+  - {fileID: 6833564628815296432, guid: 6fc3a53f1d98a52469b36ff8286f4486, type: 3}
+  - {fileID: 6833564628815296432, guid: 9d5af4c07797d754e88d3fcfe0f6afa2, type: 3}
+  - {fileID: 6833564628815296432, guid: d8f9b76ca48a9cb419119cb9b4dabd25, type: 3}
+  - {fileID: 6833564628815296432, guid: 4899aa2dd3d6b7f41b8e5e5eee64d313, type: 3}
+  - {fileID: 6833564628815296432, guid: d441523b9206ca24680fdae58473ef2e, type: 3}
+  _bodyColorConfig: {fileID: 11400000, guid: 3e797de14705fde4d8c6c9572cbe1312, type: 2}
+  _headColorConfig: {fileID: 11400000, guid: dffa7d44c6522d240b31128958401e06, type: 2}
+  _hairColorConfig: {fileID: 11400000, guid: 91a47f9cb2d7a384fb9875af05bb65f0, type: 2}
+  _spawnRadius: 1
+  _maxHumansPerHouse: 3
+  _minSpawnDistanceFromHouse: 2
+  _dayMovementSpeed: 0.2
+  _nightMovementSpeed: 0.4
+  _wanderRadius: 4
+  _homeReturnSpeed: 0.4
+  _slimeJumpFrequency: 1
+  _slimeJumpAmplitude: 0.1
+  _slimeJumpCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1.0072021
+      value: 0.5053749
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _morningExitTime: 0.3
+  _eveningReturnTime: 0.7
+  _exitToWanderDelay: 1

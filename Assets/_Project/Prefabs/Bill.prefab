@@ -229,5 +229,5 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 8133464616492768425}
   _collider: {fileID: 3569047265110515906}
   _light2D: {fileID: 4341622791988417921}
-  _colliderRadiusMultiplier: 6
+  _colliderRadiusMultiplier: 10
   _rotationSpeed: 180

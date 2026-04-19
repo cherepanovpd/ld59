@@ -90,6 +90,8 @@ namespace Core
         /// <summary> Transition from Intro to Playing state. </summary>
         public void StartGame()
         {
+            G.UI.ShowUI(true);
+            G.Audio.PlayMusic("music");
             if (_currentState == GameState.Playing)
                 return;
 

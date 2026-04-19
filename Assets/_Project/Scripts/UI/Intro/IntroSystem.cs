@@ -310,10 +310,10 @@ namespace Project.UI.Intro
 
                 case IntroState.FadeOutBackground:
                     StartFadeOutBackground();
+                    CompleteIntro();
                     break;
 
                 case IntroState.Complete:
-                    CompleteIntro();
                     break;
             }
         }

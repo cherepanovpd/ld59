@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75a8f6aad034df54d9eca1442ac5d680, type: 3}
   m_Name: CurrencyConfig
   m_EditorClassIdentifier: Assembly-CSharp::Project.Currency.Config.CurrencyConfig
-  _billCountRange: {x: 1, y: 3}
+  _billCountRange: {x: 0, y: 2}
   _billValueRange: {x: 10, y: 100}
   _flightDuration: 0.8
   _flightHeight: 2
